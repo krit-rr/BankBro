@@ -24,3 +24,4 @@ yarn-error.log*
 
 backend/.env
 backend/__pycache__
+backend/instance/dbro.db
