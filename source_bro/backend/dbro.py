@@ -6,7 +6,7 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(32), nullable=False)
     pw_hash = db.Column(db.String(64), nullable=False)
-    user_email = db.Column(db.String(64), nullable=True) # users can register without an email
+    user_email = db.Column(db.String(64), nullable=True)    # users can register without an email
 
     accounts = db.relationship('Account', backref='owner', lazy='dynamic')
     shares = db.relationship('Share', backref='owner', lazy='dynamic')
