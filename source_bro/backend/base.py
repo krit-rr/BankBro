@@ -19,6 +19,16 @@ def initdb_command():
 	print('Reinitialized the database.')
 
 
+def get_user_id(username):
+	u = User.query.filter_by(user_name=username).first()
+	return u.user_id if u else None
+
+@api.before_request
+def before_request():
+    g.user = None
+	if 'username' in session:
+		g.user = User.query.filter_by(username=session['username']).first()
+
 
 
 # home page
@@ -26,15 +36,40 @@ def initdb_command():
 def home():
     response_body = {
         "name": "Bank Bro",
-        "about" : "Manage your finance and track stocks"
+        "about" : "Manage finance & grow wealth"
     }
     return response_body
+
+# calendar page
+@api.route('/activity', methods=['GET'])
+def activity():
+    response_body = {
+        "name": "Calendar",
+        "about" : "View past and future income and expenses"
+    }
+    return response_body
+
+# stock page
+@api.route('/portfolio', methods=['GET'])
+def portfolio():
+    response_body = {
+        "name": "Investing",
+        "about" : "Track stock prices and shares"
+    }
+    return response_body
+
+
 
 @api.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        # logic to check DB and login user
+        user = User.query.filter_by(user_name=<FRONTEND>.username).first()  # fetch login username from frontend <--- TO DO!!
+        # determine that username is valid
 
+        # check that password hash matches
+
+        # log user in
+        session['user_id'] = user.user_id
         return redirect(url_for('home'))
 
     response_body = {}
@@ -42,10 +77,18 @@ def login():
 
 @api.route('/register', methods=['GET','POST'])
 def register():
-    if request.method == 'POST':
-        # logic for creating acct and add to DB
+    if g.user:
+        return redirect(url_for('home'))
 
+    error = None
+    if request.method == 'POST':
+        # test that the username is valid and doesn't already exist
+
+        # test that the password is atleast 8 chars, and both passwords match
+
+        # add new user to db with User(user_id, user_name, pw_hash)
+        
         return redirect(url_for('login'))
     
     response_body = {}
-    return response_body
+    return response_body  # response to display register page, including errors

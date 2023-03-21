@@ -12,11 +12,10 @@ class User(db.Model):
     accounts = db.relationship('Account', backref='owner', lazy='dynamic')
     shares = db.relationship('Share', backref='owner', lazy='dynamic')
 
-    def __init__(self, uid, name, pw, email=None):
+    def __init__(self, uid, name, pw):
         self.user_id = uid
         self.user_name = name
         self.pw_hash = pw
-        self.user_email = email
 
     def __repr__(self):
         return '<User {} - {}>'.format(self.user_id, self.user_name)
@@ -69,7 +68,7 @@ class Unit(enum.Enum):
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(32), nullable=False)
-    task_is_expense = db.Column(db.Boolean, nullable=False)     # if False, task is income
+    task_is_expense = db.Column(db.Boolean, nullable=False)     # if False, task is projected income
     task_amount = db.Column(db.Double, nullable=False)
 
     notify = db.Column(db.Boolean, nullable=True)
