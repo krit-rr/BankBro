@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>React + Flask Tutorial</p>
+        <p>Group 5 Finance</p>
         <div>{getMessage.status === 200 ? 
           <h3>{getMessage.data.about} - {getMessage.data.name}</h3>
           :

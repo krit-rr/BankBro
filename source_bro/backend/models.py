@@ -57,3 +57,19 @@ class Share(db.Model):
     def __repr__(self):
         return '<Stock {} - {} shares @ ${} - Current ${}>'.\
             format(self.stock_id, self.num_shares, self.avg_price, self.stock_value)
+
+
+class Task(db.Model):
+    task_id = db.Column(db.Integer, primary_key=True)
+    task_name = db.Column(db.String(32), nullable=False)
+    task_is_expense = db.Column(db.Boolean, nullable=False)     # if False, task is income
+    task_amount = db.Column(db.Double, nullable=False)
+
+    def __init__(self, tid, name, exp, amount):
+        self.task_id = tid
+        self.task_name = name
+        self.task_is_expense = exp
+        self.task_amount = amount
+
+    def __repr__(self):
+        return '<Task {} - {}>'.format(self.task_id, self.task_name)

@@ -1,5 +1,5 @@
 from flask import Flask, request, g, session, redirect, url_for
-from dbro import db, User, Account, Share   # database models
+from models import db, User, Account, Share, Task   # database models
 
 api = Flask(__name__)
 api.config.update(dict(
