@@ -1,3 +1,4 @@
+import enum
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -59,11 +60,21 @@ class Share(db.Model):
             format(self.stock_id, self.num_shares, self.avg_price, self.stock_value)
 
 
+class Unit(enum.Enum):
+    minute = 1
+    hour = 2
+    day = 3
+    week = 4
+
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(32), nullable=False)
     task_is_expense = db.Column(db.Boolean, nullable=False)     # if False, task is income
     task_amount = db.Column(db.Double, nullable=False)
+
+    notify = db.Column(db.Boolean, nullable=True)
+    notify_unit = db.Column(db.Enum(Unit), nullable=True)
+    notify_length = db.Column(db.Double, nullable=True)
 
     def __init__(self, tid, name, exp, amount):
         self.task_id = tid
