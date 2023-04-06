@@ -26,8 +26,8 @@ def get_user_id(username):
 @api.before_request
 def before_request():
     g.user = None
-	if 'username' in session:
-		g.user = User.query.filter_by(username=session['username']).first()
+    if 'username' in session:
+        g.user = User.query.filter_by(username=session['username']).first()
 
 
 
@@ -63,7 +63,7 @@ def portfolio():
 @api.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        user = User.query.filter_by(user_name=<FRONTEND>.username).first()  # fetch login username from frontend <--- TO DO!!
+        user = User.query.filter_by(user_name=request.form.username).first()  # fetch login username from frontend <--- TO DO!!
         # determine that username is valid
 
         # check that password hash matches
