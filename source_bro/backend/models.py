@@ -70,7 +70,7 @@ class Share(db.Model):
         return '<Stock {} - {} shares @ ${} - Current ${}>'.\
             format(self.stock_id, self.num_shares, self.avg_price, self.stock_value)
 
-
+# for specifying unit of time
 class Unit(enum.Enum):
     minute = 1
     hour = 2
@@ -86,7 +86,7 @@ class Task(db.Model):
     # notification settings for scheduled events
     notify = db.Column(db.Boolean, nullable=False)
     notify_unit = db.Column(db.Enum(Unit), nullable=True)
-    notify_length = db.Column(db.Double, nullable=True)
+    notify_time = db.Column(db.Double, nullable=True)
 
     def __init__(self, name, exp, amount, notify):
         self.task_name = name

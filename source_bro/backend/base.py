@@ -28,8 +28,8 @@ def get_user_id(username):
 @api.before_request
 def before_request():
     g.user = None
-    if 'username' in session:
-        g.user = User.query.filter_by(username=session['username']).first()
+    if 'user_id' in session:
+        g.user = User.query.filter_by(username=session['user_id']).first()
 
 
 
@@ -67,8 +67,10 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(user_name=request.form.username).first()  # fetch login username from frontend <--- TO DO!!
         # determine that username is valid
+        
 
         # check that password hash matches
+        
 
         # log user in
         session['user_id'] = user.user_id
@@ -85,11 +87,14 @@ def register():
     error = None
     if request.method == 'POST':
         # test that the username is valid and doesn't already exist
+        
 
         # test that the password is atleast 8 chars, and both passwords match
 
+
         # add new user to db with User(user_id, user_name, pw_hash)
         
+
         return redirect(url_for('login'))
     
     response_body = {}
