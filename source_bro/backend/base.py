@@ -1,7 +1,9 @@
 from flask import Flask, request, g, session, redirect, url_for
 from models import db, User, Account, Share, Task   # database models
+from flask_cors import CORS
 
 api = Flask(__name__)
+CORS(api, origins=["http://localhost:3000"])
 api.config.update(dict(
 	SECRET_KEY='devkey',
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///dbro.db'
