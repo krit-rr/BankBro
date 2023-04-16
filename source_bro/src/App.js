@@ -5,8 +5,8 @@ import axios from 'axios'
 function App() {
   const [getMessage, setGetMessage] = useState({})
 
-  useEffect(()=>{
-    axios.get('/home').then(response => {
+  useEffect(() => {
+    axios.get('http://localhost:5000/home').then(response => {
       console.log("SUCCESS", response.data)
       setGetMessage(response)
     }).catch(error => {
