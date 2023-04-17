@@ -3,17 +3,17 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models import db, User, Account, Share, Task   # database models
 from flask_cors import CORS
 
-api = Flask(__name__)
-CORS(api, origins=["http://localhost:3000"])
-api.config.update(dict(
+app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])
+app.config.update(dict(
 	SECRET_KEY='devkey',
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///dbro.db'
 ))
-db.init_app(api)
+db.init_app(app)
 
 
 # clear all models and reinitialize
-@api.cli.command('initdb')
+@app.cli.command('initdb')
 def initdb_command():
 	db.drop_all()
 	db.create_all()
@@ -26,7 +26,7 @@ def get_user_id(username):
 	u = User.query.filter_by(user_name=username).first()
 	return u.user_id if u else None
 
-@api.before_request
+@app.before_request
 def before_request():
     g.user = None
     if 'user_id' in session:
@@ -35,7 +35,7 @@ def before_request():
 
 
 # home page
-@api.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET'])
 def home():
     response_body = {
         "name": "Bank Bro",
@@ -44,7 +44,7 @@ def home():
     return response_body
 
 # calendar page
-@api.route('/activity', methods=['GET'])
+@app.route('/activity', methods=['GET'])
 def activity():
     response_body = {
         "name": "Calendar",
@@ -53,7 +53,7 @@ def activity():
     return response_body
 
 # stock page
-@api.route('/portfolio', methods=['GET'])
+@app.route('/portfolio', methods=['GET'])
 def portfolio():
     response_body = {
         "name": "Investing",
@@ -62,7 +62,7 @@ def portfolio():
     return response_body
 
 
-@api.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     # to fix:
     if request.method == 'POST':
@@ -77,7 +77,7 @@ def login():
 
     return render_template('login.html')
 
-@api.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     # to fix:
     if request.method == 'POST':
@@ -98,11 +98,11 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html')
 
-@api.route('/logout')
+@app.route('/logout')
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('index'))
 
-@api.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
