@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portfolio</title>
+    <style>
+        body {
+            background-color: #F8F8F8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-top: -30%;
+            color: #2E2E2E;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #3498DB;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            margin-right: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        a:hover {
+            background-color: #2980B9;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Portfolio</h1>
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Value</td>
+                <td>Avg Value</td>
+                <td>+/-%</td>
+            </tr>
+            <tr>
+                <td>APL</td>
+                <td>125</td>
+                <td>85.3</td>
+                <td>.25</td>
+            </tr>
+        <table>
+
+        <div id="test"></div>
+    </div>
+
+
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script src="../static/test.js"></script>
+</body>
+</html>

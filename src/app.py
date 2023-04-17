@@ -55,11 +55,11 @@ def activity():
 # stock page
 @app.route('/portfolio', methods=['GET'])
 def portfolio():
-    response_body = {
-        "name": "Investing",
-        "about" : "Track stock prices and shares"
-    }
-    return response_body
+    if not g.user:
+        return redirect(url_for('index'))
+    
+    
+    return render_template('portfolio.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
