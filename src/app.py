@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models import db, User, Account, Share, Task   # database models
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = '../templates')
 CORS(app, origins=["http://localhost:3000"])
 app.config.update(dict(
 	SECRET_KEY='devkey',
@@ -44,11 +44,57 @@ def home():
     return response_body
 
 # calendar page
-@app.route('/activity', methods=['GET'])
+'''@app.route('/activity', methods=['GET'])
 def activity():
     response_body = {
         "name": "Calendar",
         "about" : "View past and future income and expenses"
+    }
+    return response_body'''
+
+events = [
+    {
+        'title' : 'TestEvent',
+        'start' : '2021-08-24', 
+        'end' : '',
+        'url' : 'https://youtube.com'
+    },
+    {
+        'title' : 'Another TestEvent',
+        'start' : '2021-08-25', 
+        'end' : '2021-08-26',
+        'url' : 'https://google.com'
+    },
+]
+
+@api.route('/activity')
+def cal():
+    return render_template("cal.html", events=events)
+
+@api.route('/add', methods=['GET', "POST"])
+def add():
+    if request.method == "POST":
+        title = request.form['title']
+        start = request.form['start']
+        end = request.form['end']
+        url = request.form['url']
+        if end == '':
+            end=start
+        events.append({
+            'title' : title,
+            'start' : start,
+            'end' : end,
+            'url' : url
+        },
+        )
+    return render_template("add.html")
+
+# stock page
+@api.route('/portfolio', methods=['GET'])
+def portfolio():
+    response_body = {
+        "name": "Investing",
+        "about" : "Track stock prices and shares"
     }
     return response_body
 
