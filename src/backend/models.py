@@ -10,14 +10,15 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.String(32), nullable=False)
     pw_hash = db.Column(db.String(64), nullable=False)
-    user_email = db.Column(db.String(64), nullable=True)    # users can register without an email
+    user_email = db.Column(db.String(64), nullable=False)
 
     accounts = db.relationship('Account', backref='owner', lazy='dynamic')
     shares = db.relationship('Share', backref='owner', lazy='dynamic')
 
-    def __init__(self, name, pw):
+    def __init__(self, name, pw, email):
         self.user_name = name
         self.pw_hash = pw
+        self.user_email = email
 
     def serialize(self):
         return {'id': self.user_id, 'name': self.user_name}

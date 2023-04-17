@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #F8F8F8;
+            font-family: Arial, sans-serif;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #2E2E2E;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2E2E2E;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            border-radius: 3px;
+            border: none;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #3498DB;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980B9;
+        }
+
+        a {
+            color: #3498DB;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Register - Bank Bro System</h1>
+        <form action="/register" method="post">
+            {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            <label>Username: <input type="text" name="username" required></label>
+            <label>Email: <input type="email" name="email" required></label>
+            <label>Password: <input type="password" name="password" required></label>
+            <label>Confirm Password: <input type="password" name="confirm_password" required></label>
+            <input type="submit" value="Register">
+            <a href="/login">Login</a>
+        </form>
+    </div>
+</body>
+</html>
