@@ -51,7 +51,7 @@ def calendar():
         return redirect(url_for('index'))
 
     tasks = Task.query.filter_by(task_owner=g.user.user_id).all()
-    return render_template("calendar.html", tasks=tasks)
+    return render_template("calendar.html", tasks=tasks, user=g.user.user_name)
 
 
 @app.route('/add_task', methods=['GET', "POST"])
@@ -74,7 +74,7 @@ def add_task():
         db.session.commit()
         return redirect(url_for('calendar'))
 
-    return render_template("add_task.html")
+    return render_template("add_task.html", user=g.user.user_name)
 
 @app.route('/activity/<int:task_id>', methods=['GET', 'POST'])
 def modify(task_id):
@@ -89,7 +89,7 @@ def modify(task_id):
         db.session.commit()
         return redirect(url_for('calendar'))
 
-    return render_template('modify.html', task=t)
+    return render_template('modify.html', task=t, user=g.user.user_name)
 
 
 # stock page
