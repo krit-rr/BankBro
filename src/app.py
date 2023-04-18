@@ -62,16 +62,33 @@ def add():
         amount = request.form['amount']
         year, month, day = request.form['date'].split('-')
         dbdate = date(int(year), int(month), int(day))		# turn HTML date into date type SQLAlchemy knows
-        hour, minute = request.form['time'].split(':')
-        dbtime = time(int(hour), int(minute))
-        exp = True
-        t = Task(name, dbdate, exp, amount, False, g.user.user_id, time=dbtime) # false is notify
+        if request.form['time'] != '':
+            hour, minute = request.form['time'].split(':')
+            dbtime = time(int(hour), int(minute))
+        else:
+            dbtime = None
+        expense = True # fix boolean value
+        t = Task(name, dbdate, expense, amount, False, g.user.user_id, time=dbtime) # false is notify
         db.session.add(t)
         g.user.tasks.append(t)
         db.session.commit()
         return redirect(url_for('calendar'))
 
     return render_template("add.html")
+
+@app.route('/activity/<int:task_id>', methods=['GET', 'POST'])
+def modify(task_id):
+    t = Task.query.filter_by(task_id=task_id).first()
+    if request.method == 'POST':
+        notify = False # fix finding boolean
+        
+        t.notify = notify
+        t.notify_time = request.form['time']
+        t.notify_unit = request.form['unit']
+        db.session.commit()
+
+    return render_template('modify.html', task=t)
+
 
 # stock page
 @app.route('/portfolio', methods=['GET'])

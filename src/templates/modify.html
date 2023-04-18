@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+    Modify Event
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <form action="/activity/{{ task.task_id }}" method="POST">
+            <label>{{ task.task_name }} Notification Settings</label>
+            <div class="mb-3">
+              <label for="notify" class="form-label">Notify:</label>
+              <input type="checkbox" class="form-control" name="notify" id="notify">
+            </div>
+            <div class="mb-3">
+              <label for="time" class="form-label">Time before task to notify:</label>
+              <input type="number" class="form-control" name="time" id="time" step="0.05" required>
+            </div>
+            <div class="mb-3">
+              <select id="unit" name="unit">
+                <option value="minute">Minute(s)</option>
+                <option value="hour">Hour(s)</option>
+                <option value="day">Day(s)</option>
+                <option value="week">Week(s)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </form>
+    </div>
+{% endblock body %}
