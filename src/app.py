@@ -51,11 +51,11 @@ def calendar():
         return redirect(url_for('index'))
 
     tasks = Task.query.filter_by(task_owner=g.user.user_id).all()
-    return render_template("cal.html", tasks=tasks)
+    return render_template("calendar.html", tasks=tasks)
 
 
-@app.route('/add', methods=['GET', "POST"])
-def add():
+@app.route('/add_task', methods=['GET', "POST"])
+def add_task():
     if request.method == "POST":
         name = request.form['title']
         
@@ -67,25 +67,27 @@ def add():
             dbtime = time(int(hour), int(minute))
         else:
             dbtime = None
-        expense = True # fix boolean value
+        expense = bool(request.form.get('expense'))
         t = Task(name, dbdate, expense, amount, False, g.user.user_id, time=dbtime) # false is notify
         db.session.add(t)
         g.user.tasks.append(t)
         db.session.commit()
         return redirect(url_for('calendar'))
 
-    return render_template("add.html")
+    return render_template("add_task.html")
 
 @app.route('/activity/<int:task_id>', methods=['GET', 'POST'])
 def modify(task_id):
     t = Task.query.filter_by(task_id=task_id).first()
+    if t is None:
+        return redirect(url_for('calendar'))
+
     if request.method == 'POST':
-        notify = False # fix finding boolean
-        
-        t.notify = notify
+        t.notify = bool(request.form.get('notify'))
         t.notify_time = request.form['time']
         t.notify_unit = request.form['unit']
         db.session.commit()
+        return redirect(url_for('calendar'))
 
     return render_template('modify.html', task=t)
 

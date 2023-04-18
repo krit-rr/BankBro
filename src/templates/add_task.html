@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}
-    Add Event
+    Add Task
 {% endblock title %}
 
 {% block body %}
     <div class="container">
-        <form action="/add" method="POST">
+        <form action="/add_task" method="POST">
             <div class="mb-3">
               <label for="title" class="form-label">Task Name</label>
               <input type="text" class="form-control" name="title" id="title" placeholder="Enter the task name" required>
@@ -18,7 +18,7 @@
               <label for="time" class="form-label">Time</label>
               <input type="time" id="time" name="time"min="00:00" max="24:00">
             </div>
-            <div class="mb-3">
+            <div>
               <label for="expense" class="form-label">Task is expense:</label>
               <input type="checkbox" class="form-control" name="expense" id="expense" checked="checked">
             </div>

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}
-    Modify Event
+    Task Notification Settings
 {% endblock title %}
 
 {% block body %}
     <div class="container">
         <form action="/activity/{{ task.task_id }}" method="POST">
-            <label>{{ task.task_name }} Notification Settings</label>
+            <label>{{ task.task_name }} Notification Settings ({{ task.task_date }})</label>
             <div class="mb-3">
               <label for="notify" class="form-label">Notify:</label>
               <input type="checkbox" class="form-control" name="notify" id="notify">
