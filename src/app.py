@@ -98,8 +98,15 @@ def portfolio():
     if not g.user:
         return redirect(url_for('index'))
     
-    
     return render_template('portfolio.html')
+
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    if not g.user:
+        return redirect(url_for('index'))
+
+    return render_template('profile.html', user=g.user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
