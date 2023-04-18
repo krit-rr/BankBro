@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models import db, User, Account, Share, Task   # database models
 from flask_cors import CORS
 
-app = Flask(__name__, template_folder = '../templates')
+app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
 app.config.update(dict(
 	SECRET_KEY='devkey',
@@ -67,11 +67,11 @@ events = [
     },
 ]
 
-@api.route('/activity')
-def cal():
+@app.route('/activity')
+def calendar():
     return render_template("cal.html", events=events)
 
-@api.route('/add', methods=['GET', "POST"])
+@app.route('/add', methods=['GET', "POST"])
 def add():
     if request.method == "POST":
         title = request.form['title']
@@ -85,18 +85,8 @@ def add():
             'start' : start,
             'end' : end,
             'url' : url
-        },
-        )
+        })
     return render_template("add.html")
-
-# stock page
-@api.route('/portfolio', methods=['GET'])
-def portfolio():
-    response_body = {
-        "name": "Investing",
-        "about" : "Track stock prices and shares"
-    }
-    return response_body
 
 # stock page
 @app.route('/portfolio', methods=['GET'])
