@@ -7,22 +7,26 @@
     <div class="container">
         <form action="/add" method="POST">
             <div class="mb-3">
-              <label for="title" class="form-label">Event title</label>
-              <input type="text" class="form-control" name="title" id="title" placeholder="Enter the event title">
+              <label for="title" class="form-label">Task Name</label>
+              <input type="text" class="form-control" name="title" id="title" placeholder="Enter the task name" required>
             </div>
             <div class="mb-3">
-              <label for="start" class="form-label">Start date</label>
-              <input type="text" class="form-control" name="start" id="start" placeholder="Format is yyyy-mm-ddThh:mm Ignore Thh:mm if you need it for all day">
+              <label for="date" class="form-label">Task Date</label>
+              <input type="date" class="form-control" name="date" id="date" required>
             </div>
             <div class="mb-3">
-              <label for="end" class="form-label">End date</label>
-              <input type="text" class="form-control" name="end" id="end" placeholder="leave empty for event to be all day">
+              <label for="time" class="form-label">Time</label>
+              <input type="time" id="time" name="time"min="00:00" max="24:00">
             </div>
             <div class="mb-3">
-              <label for="url" class="form-label">Event url</label>
-              <input type="url" class="form-control" name="url" id="url" placeholder="Leave empty for no url to be there">
+              <label for="expense" class="form-label">Task is expense:</label>
+              <input type="checkbox" class="form-control" name="expense" id="expense" checked="checked">
             </div>
-            <button type="submit" class="btn btn-outline-dark">Submit</button>
+            <div class="mb-3">
+              <label for="amount" class="form-label">Amount</label>
+              <input type="number" class="form-control" name="amount" id="amount" placeholder="ex. 104.54" required>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Create Upcoming Task</button>
           </form>
     </div>
 {% endblock body %}

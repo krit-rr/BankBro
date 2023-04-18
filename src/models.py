@@ -14,6 +14,7 @@ class User(db.Model):
 
     accounts = db.relationship('Account', backref='owner', lazy='dynamic')
     shares = db.relationship('Share', backref='owner', lazy='dynamic')
+    tasks = db.relationship('Task', backref='responsible', lazy='dynamic')
 
     def __init__(self, name, pw, email):
         self.user_name = name
@@ -36,10 +37,11 @@ class Account(db.Model):
 
     acc_holder = db.Column(db.Integer, db.ForeignKey('user.user_id'))
 
-    def __init__(self, name, total):
+    def __init__(self, name, total, holder):
         self.acc_name = name
         self.acc_age = 0
         self.acc_total = total
+        self.acc_holder = holder
 
     def serialize(self):
         return {'id': self.acc_id, 'name': self.acc_name, 'age': self.acc_age}
@@ -57,12 +59,13 @@ class Share(db.Model):
 
     share_holder = db.Column(db.Integer, db.ForeignKey('user.user_id'))
 
-    def __init__(self, sid, name, val, num, avg):
+    def __init__(self, sid, name, val, num, avg, holder):
         self.stock_id = sid
         self.stock_name = name
         self.stock_value = val
         self.num_shares = num
         self.avg_price = avg
+        self.share_holder = holder
 
     def serialize(self):
         return {'id': self.stock_id, 'name': self.stock_name, 'value': self.stock_value}
@@ -81,19 +84,26 @@ class Unit(enum.Enum):
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     task_name = db.Column(db.String(32), nullable=False)
+    task_date = db.Column(db.Date, nullable=False)
     task_is_expense = db.Column(db.Boolean, nullable=False)     # if False, task is projected income (expense if True)
     task_amount = db.Column(db.Double, nullable=False)
+    task_time = db.Column(db.Time, nullable=True)
+
+    task_owner = db.Column(db.Integer, db.ForeignKey('user.user_id'))
 
     # notification settings for scheduled events
     notify = db.Column(db.Boolean, nullable=False)
     notify_unit = db.Column(db.Enum(Unit), nullable=True)
     notify_time = db.Column(db.Double, nullable=True)
 
-    def __init__(self, name, exp, amount, notify):
+    def __init__(self, name, date, exp, amount, notify, owner, time=None):
         self.task_name = name
+        self.task_date = date
         self.task_is_expense = exp
         self.task_amount = amount
         self.notify = notify
+        self.task_owner = owner
+        self.task_time = time
 
     def serialize(self):
         return {'id': self.task_id, 'name': self.task_name}

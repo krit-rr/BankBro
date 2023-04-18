@@ -13,12 +13,12 @@ Calendar
       initialView: 'dayGridMonth',
       aspectRatio: 2.25,
       events: [
-        {% for event in events %}  
+      {% for t in tasks %}
       {
-        title: '{{event.title}}',
-        start: '{{event.start}}',
-        end: '{{event.end}}',
-        url: '{{event.url}}',
+        name: '{{t.task_name}}',
+        date: '{{t.task_date}}',
+        expense: '{{t.task_is_expense}}',
+        amount: '{{t.task_amount}}',
       },
       {% endfor %}
       ],

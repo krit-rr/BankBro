@@ -2,6 +2,7 @@ from flask import Flask, request, g, session, redirect, url_for, render_template
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import db, User, Account, Share, Task   # database models
 from flask_cors import CORS
+from datetime import date, time
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
@@ -43,49 +44,33 @@ def home():
     }
     return response_body
 
-# calendar page
-'''@app.route('/activity', methods=['GET'])
-def activity():
-    response_body = {
-        "name": "Calendar",
-        "about" : "View past and future income and expenses"
-    }
-    return response_body'''
-
-events = [
-    {
-        'title' : 'TestEvent',
-        'start' : '2021-08-24', 
-        'end' : '',
-        'url' : 'https://youtube.com'
-    },
-    {
-        'title' : 'Another TestEvent',
-        'start' : '2021-08-25', 
-        'end' : '2021-08-26',
-        'url' : 'https://google.com'
-    },
-]
 
 @app.route('/activity')
 def calendar():
-    return render_template("cal.html", events=events)
+    if not g.user:
+        return redirect(url_for('index'))
+
+    tasks = Task.query.filter_by(task_owner=g.user.user_id).all()
+    return render_template("cal.html", tasks=tasks)
+
 
 @app.route('/add', methods=['GET', "POST"])
 def add():
     if request.method == "POST":
-        title = request.form['title']
-        start = request.form['start']
-        end = request.form['end']
-        url = request.form['url']
-        if end == '':
-            end=start
-        events.append({
-            'title' : title,
-            'start' : start,
-            'end' : end,
-            'url' : url
-        })
+        name = request.form['title']
+        
+        amount = request.form['amount']
+        year, month, day = request.form['date'].split('-')
+        dbdate = date(int(year), int(month), int(day))		# turn HTML date into date type SQLAlchemy knows
+        hour, minute = request.form['time'].split(':')
+        dbtime = time(int(hour), int(minute))
+        exp = True
+        t = Task(name, dbdate, exp, amount, False, g.user.user_id, time=dbtime) # false is notify
+        db.session.add(t)
+        g.user.tasks.append(t)
+        db.session.commit()
+        return redirect(url_for('calendar'))
+
     return render_template("add.html")
 
 # stock page
