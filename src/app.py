@@ -38,11 +38,10 @@ def before_request():
 # home page
 @app.route('/home', methods=['GET'])
 def home():
-    response_body = {
-        "name": "Bank Bro",
-        "about" : "Manage finance & grow wealth"
-    }
-    return response_body
+    if not g.user:
+        return redirect(url_for('index'))
+    
+    return render_template('home.html')
 
 
 @app.route('/activity')
