@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>BankBro - Home</title>
-    <style>
-      /* Insert your custom styles here */
-    </style>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="/activity">Calendar</a></li>
-          <li><a href="/add_task">Add Task</a></li>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/logout">Logout</a></li>
-        </ul>
-      </nav>
-    </header>
+{% extends 'base.html' %}
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block style %}<style>
+    * {
+        text-align: center;
+    }
+</style>{% endblock %}
+
+{% block body %}
     <main>
       <div class="hero-section">
         <h1>Welcome to BankBro!</h1>
@@ -49,5 +42,4 @@
       <p>&copy; 2023 Task Manager</p>
     </footer>
     <!-- Load React and the React component here -->
-  </body>
-</html>
+{% endblock %}
