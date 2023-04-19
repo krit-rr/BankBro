@@ -149,7 +149,23 @@
       <div class="hero-section">
         <h1>Welcome to BankBro!</h1>
         <p>Keep track of your tasks and expenses with ease.</p>
-        <a href="/activity">View Your Calendar</a>
+        <div>
+          <label>Today's transactions:</label>
+            <ul>
+              {% for t in tasks %}
+                <li>{{ t.task_name }}: 
+                  {% if t.task_is_expense %}
+                    (-${{ t.task_amount }})
+                  {% else %}
+                  (+${{ t.task_amount }})
+                  {% endif %}
+                </li>
+              {% else %}
+                <li>No tasks today</li>
+              {% endfor %}
+            </ul>
+            <a href="/activity">View Your Calendar</a>
+        </div>
       </div>
       <div class="portfolio-section">
         <h2>Portfolio</h2>

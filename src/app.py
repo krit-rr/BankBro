@@ -41,7 +41,9 @@ def home():
     if not g.user:
         return redirect(url_for('index'))
     
-    return render_template('home.html')
+    d = date.today()
+    t = Task.query.filter_by(task_owner=g.user.user_id).filter_by(task_date=d).all()
+    return render_template('home.html', tasks=t)
 
 
 @app.route('/activity')
