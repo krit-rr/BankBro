@@ -3,10 +3,6 @@
     Home
 {% endblock title %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Home Page</title>
     {% block style %} <style>
       body {
         margin: 0;
@@ -140,7 +136,6 @@
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/calendar">Calendar</a></li>
-          <li><a href="/add_task">Add Task</a></li>
         </ul>
       </nav>
     </header>
@@ -160,9 +155,9 @@
                   (+${{ t.task_amount }})
                   {% endif %}
                 </li>
-              {% else %}
+                  {% else %}
                 <li>No tasks today</li>
-              {% endfor %}
+                  {% endfor %}
             </ul>
             <a href="/activity">View Your Calendar</a>
         </div>
