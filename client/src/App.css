@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #000000;
+  --color-secondary: #727272;
+  --color-tertiary: #357fff;
+  --color-bullish: #00873c;
+  --color-bearish: #ff0000;
+  --color-secondary-light: rgb(190, 190, 190);
+  --font-xs: 0.75rem;
+  --font-s: 0.85rem;
+  --font-S: 1rem;
+  --font-m: 1.25rem;
+  --font-M: 1.5rem;
+  --font-l: 2rem;
+  --font-xl: 2.5rem;
+  --font-xxl: 3rem;
+  --breakpoint-1: 1280px;
+  --breakpoint-2: 800px;
+  --breakpoint-3: 450px;
+}
+
+#App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: var(--breakpoint-2);
+  background: #fff;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--breakpoint-1);
+  min-height: 100vh;
+  height: 100%;
+  padding: 50px;
+  background: inherit;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  main {
+    width: 100%;
+    padding: 50px 25px;
+  }
+}
