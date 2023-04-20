@@ -6,10 +6,6 @@
 {% block body %}
     <div class="container">
         <form action="/add_task" method="POST">
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" name="expense" id="expense" checked="checked">
-              <label for="expense" class="form-check-label">Task is expense:</label>
-            </div>
             <div class="mb-3">
               <label for="title" class="form-label">Task Name</label>
               <input type="text" class="form-control" name="title" id="title" placeholder="Enter the task name" required>
@@ -21,6 +17,10 @@
             <div class="mb-3">
               <label for="time" class="form-label">Time</label>
               <input type="time" id="time" name="time"min="00:00" max="23:59">
+            </div>
+            <div class="mb-3 form-check">
+              <label for="expense" class="form-check-label">Task is expense</label>
+              <input type="checkbox" class="form-check-input" name="expense" id="expense" checked="checked">
             </div>
             <div class="mb-3">
               <label for="amount" class="form-label">Amount</label>
